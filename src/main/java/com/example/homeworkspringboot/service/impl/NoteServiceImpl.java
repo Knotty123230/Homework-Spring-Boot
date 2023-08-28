@@ -24,10 +24,10 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note add(Note note) {
-        Note newNote = new Note(note.getId(), note.getTitle(), note.getContent());
-        notes.put(newNote.getId(), newNote);
-        return newNote;
+    public void add(Note note) {
+        if (getById(note.getId()).isEmpty()){
+            notes.put(note.getId(), note);
+        }
     }
 
     @Override
