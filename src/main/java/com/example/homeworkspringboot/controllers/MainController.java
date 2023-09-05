@@ -1,5 +1,6 @@
 package com.example.homeworkspringboot.controllers;
 
+import com.example.homeworkspringboot.constants.Constants;
 import com.example.homeworkspringboot.dto.Note;
 import com.example.homeworkspringboot.service.NoteService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,9 @@ public class MainController {
         modelAndView.addObject("notes", noteService.listAll());
         return modelAndView;
     }
-    @PostMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id){
-        ModelAndView modelAndView = new ModelAndView("redirect:/list");
+    @PostMapping("/delete")
+    public ModelAndView delete(@RequestParam Long id){
+        ModelAndView modelAndView = new ModelAndView(Constants.redirect);
         noteService.deleteById(id);
         return modelAndView;
     }
@@ -42,7 +43,7 @@ public class MainController {
     }
     @PostMapping("/edit")
     public ModelAndView editNote(@ModelAttribute("note") Note note) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/list");
+        ModelAndView modelAndView = new ModelAndView(Constants.redirect);
         noteService.update(note);
         return modelAndView;
     }
@@ -54,7 +55,7 @@ public class MainController {
     }
     @PostMapping("/add")
     public ModelAndView add(@ModelAttribute("note") Note note){
-        ModelAndView modelAndView = new ModelAndView("redirect:/list");
+        ModelAndView modelAndView = new ModelAndView(Constants.redirect);
         noteService.add(note);
         return modelAndView;
     }

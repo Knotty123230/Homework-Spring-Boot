@@ -17,7 +17,7 @@
         }
         .table {
             border-radius: 10px;
-            background-color: white; /* Білий фон таблиці */
+            background-color: white;
         }
     </style>
 </head>
@@ -44,7 +44,7 @@
             <td th:text="${note.getTitle()}"></td>
             <td th:text="${note.getContent()}"></td>
             <td>
-                <form th:action="@{/delete/{id}(id=${note.id})}" method="post">
+                <form th:action="@{'/delete?id=' + ${note.id}}" method="post">
                     <input type="submit" class="btn btn-danger" value="Delete"/>
                 </form>
                 <br/>

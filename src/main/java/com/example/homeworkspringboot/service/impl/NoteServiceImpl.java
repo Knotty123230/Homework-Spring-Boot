@@ -1,55 +1,43 @@
 package com.example.homeworkspringboot.service.impl;
 
 import com.example.homeworkspringboot.dto.Note;
+import com.example.homeworkspringboot.repository.NoteRepository;
 import com.example.homeworkspringboot.service.NoteService;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 @Data
+@RequiredArgsConstructor
 public class NoteServiceImpl implements NoteService {
-    private Map<Long, Note> notes;
+    private final NoteRepository repository;
 
-    public NoteServiceImpl() {
-        notes = new HashMap<>();
-    }
 
     @Override
     public List<Note> listAll() {
-        ArrayList<Note> noteArrayList = new ArrayList<>();
-        notes.forEach((aLong, note) -> noteArrayList.add(note));
-        return noteArrayList;
+        return repository.findAll();
     }
 
     @Override
     public void add(Note note) {
-        if (getById(note.getId()).isEmpty()){
-            notes.put(note.getId(), note);
-        }
+        repository.save(note);
     }
 
     @Override
     public void deleteById(long id) {
-        Optional<Note> note = Optional.ofNullable(notes.get(id));
-        if (note.isPresent()){
-            notes.remove(id);
-        }
+        repository.deleteById(id);
     }
 
     @Override
     public void update(Note note) {
-        Optional<Note> notesOptional = Optional.ofNullable(notes.get(note.getId()));
-        if (notesOptional.isPresent()){
-            Note noteNew = notes.get(note.getId());
-            noteNew.setContent(note.getContent());
-            noteNew.setTitle(note.getTitle());
-        }
+        repository.save(note);
     }
 
     @Override
     public Optional<Note> getById(long id) {
-        return Optional.ofNullable(notes.get(id));
+        return repository.findById(id);
     }
 }
